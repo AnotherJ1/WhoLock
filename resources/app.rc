@@ -1,0 +1,9 @@
+// Windows resource script for File Lock Inspector
+// 由 build.rs 通过 embed_resource crate 编译并嵌入到最终可执行文件中。
+//
+// 资源 ID 1 + 类型 24 (RT_MANIFEST) 表示该 manifest 是进程默认 manifest。
+// 直接使用数字 24 而非宏，避免依赖 winuser.h（在 windres 工具链下未必可用）。
+
+#pragma code_page(65001)
+
+1 24 "app.manifest"

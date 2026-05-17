@@ -1,0 +1,16 @@
+# Rust 构建产物
+/target/
+**/*.rs.bk
+Cargo.lock.bak
+
+# 编辑器/IDE
+.vscode/
+.idea/
+*.swp
+
+# 系统
+Thumbs.db
+.DS_Store
+
+# Kiro 本地产物（不进版本库）
+.kiro/last-cargo-check.log

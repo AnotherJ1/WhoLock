@@ -1,0 +1,62 @@
+[package]
+name = "file-lock-inspector"
+version = "0.1.0"
+edition = "2021"
+description = "Windows 文件占用查询工具：基于 Restart Manager API 实时检测谁锁定了文件/文件夹"
+license = "MIT OR Apache-2.0"
+publish = false
+
+[dependencies]
+# UI 框架（egui + eframe）
+eframe = { version = "0.28", default-features = false, features = ["default_fonts", "glow", "persistence"] }
+egui = "0.28"
+egui_extras = { version = "0.28", features = ["all_loaders"] }
+
+# 原生文件/文件夹选择对话框（egui 自身不带）
+rfd = "0.14"
+
+# Win32 绑定
+windows = { version = "0.58", features = [
+    "Win32_Foundation",
+    "Win32_Security",
+    "Win32_System_Threading",
+    "Win32_System_ProcessStatus",
+    "Win32_System_RestartManager",
+    "Win32_System_Diagnostics_Debug",
+    "Win32_UI_Shell",
+    "Win32_Storage_FileSystem",
+] }
+
+# 通道与并发
+crossbeam-channel = "0.5"
+
+# 序列化（用于配置持久化）
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+
+# 日志
+tracing = "0.1"
+tracing-subscriber = { version = "0.3", features = ["env-filter"] }
+tracing-appender = "0.2"
+
+# 错误处理
+thiserror = "1"
+anyhow = "1"
+
+# 其他
+once_cell = "1"
+dirs = "5"
+
+[build-dependencies]
+# 嵌入 Windows manifest（DPI Aware、common controls v6、asInvoker）
+embed-resource = "2"
+
+[dev-dependencies]
+# 临时文件/目录工具（仅测试用）
+tempfile = "3"
+
+[profile.release]
+opt-level = 3
+lto = "thin"
+codegen-units = 1
+strip = "symbols"
