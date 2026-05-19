@@ -37,6 +37,62 @@ impl Clock for SystemClock {
     }
 }
 
+// ---------------------------------------------------------------------------
+// FakeClock：测试用手动推进时钟
+// ---------------------------------------------------------------------------
+
+use std::sync::Mutex;
+
+/// 用于测试的手动推进时钟。
+///
+/// 内部以"基准 Instant + 累积偏移 Duration"的方式模拟时间推进，
+/// 因为稳定 Rust 不支持直接构造任意 `Instant` 值。
+/// 同时记录所有 `sleep` 调用的参数，供断言使用。
+pub struct FakeClock {
+    base: Instant,
+    offset: Mutex<Duration>,
+    sleeps: Mutex<Vec<Duration>>,
+}
+
+impl FakeClock {
+    /// 以 `Instant::now()` 为基准创建新时钟，偏移为零。
+    pub fn new() -> Self {
+        Self {
+            base: Instant::now(),
+            offset: Mutex::new(Duration::ZERO),
+            sleeps: Mutex::new(Vec::new()),
+        }
+    }
+
+    /// 原子地将时钟向前推进 `d`。
+    pub fn advance(&self, d: Duration) {
+        *self.offset.lock().unwrap() += d;
+    }
+
+    /// 返回所有已记录的 `sleep` 调用参数（按调用顺序）。
+    pub fn recorded_sleeps(&self) -> Vec<Duration> {
+        self.sleeps.lock().unwrap().clone()
+    }
+}
+
+impl Default for FakeClock {
+    fn default() -> Self {
+        Self::new()
+    }
+}
+
+impl Clock for FakeClock {
+    /// 返回 `base + 累积偏移`，模拟单调递增的时刻。
+    fn now(&self) -> Instant {
+        self.base + *self.offset.lock().unwrap()
+    }
+
+    /// 不实际睡眠，仅记录参数。
+    fn sleep(&self, d: Duration) {
+        self.sleeps.lock().unwrap().push(d);
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -51,6 +107,11 @@ mod tests {
         let clock = SystemClock;
         let t1 = clock.now();
         let t2 = clock.now();
-        assert!(t2 >= t1, "Instant::now 必须单调不减：t1={:?}, t2={:?}", t1, t2);
+        assert!(
+            t2 >= t1,
+            "Instant::now 必须单调不减：t1={:?}, t2={:?}",
+            t1,
+            t2
+        );
     }
 }

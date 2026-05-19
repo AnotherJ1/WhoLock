@@ -14,3 +14,9 @@ Thumbs.db
 
 # Kiro 本地产物（不进版本库）
 .kiro/last-cargo-check.log
+
+# OMC 工具内部状态
+.omc/
+
+# 文档生成产物
+docs/manifest.xml

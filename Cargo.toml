@@ -19,11 +19,15 @@ rfd = "0.14"
 windows = { version = "0.58", features = [
     "Win32_Foundation",
     "Win32_Security",
+    "Win32_Security_Authorization",
+    "Win32_System_Registry",
+    "Win32_System_SystemInformation",
     "Win32_System_Threading",
     "Win32_System_ProcessStatus",
     "Win32_System_RestartManager",
     "Win32_System_Diagnostics_Debug",
     "Win32_UI_Shell",
+    "Win32_UI_WindowsAndMessaging",
     "Win32_Storage_FileSystem",
 ] }
 
@@ -54,6 +58,8 @@ embed-resource = "2"
 [dev-dependencies]
 # 临时文件/目录工具（仅测试用）
 tempfile = "3"
+# 属性测试（Property-Based Testing）
+proptest = "1"
 
 [profile.release]
 opt-level = 3

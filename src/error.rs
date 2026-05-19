@@ -151,7 +151,6 @@ pub enum RmError {
     Other(String),
 }
 
-
 // ---------------------------------------------------------------------------
 // FormatMessageW 工具
 // ---------------------------------------------------------------------------
@@ -237,7 +236,10 @@ mod tests {
         // 验证 Display 字符串包含 `0x{:08X}` 格式（design 要求）
         let err = AppError::Win32(5, "Access is denied.".into());
         let s = err.to_string();
-        assert!(s.contains("0x00000005"), "期望包含大写零填充的错误码，实际: {s}");
+        assert!(
+            s.contains("0x00000005"),
+            "期望包含大写零填充的错误码，实际: {s}"
+        );
     }
 
     #[test]
@@ -247,7 +249,10 @@ mod tests {
             desc: "Cannot create a file when that file already exists.".into(),
         };
         let s = err.to_string();
-        assert!(s.contains("0x000000B7"), "期望包含大写零填充的错误码，实际: {s}");
+        assert!(
+            s.contains("0x000000B7"),
+            "期望包含大写零填充的错误码，实际: {s}"
+        );
     }
 
     #[test]
@@ -257,7 +262,10 @@ mod tests {
         let s = err.to_string();
         assert!(s.contains("0x00000005"));
         // 至少包含错误码后的冒号 + 一段非空描述
-        assert!(s.len() > "Win32 错误 0x00000005: ".len(), "期望含本地化描述，实际: {s}");
+        assert!(
+            s.len() > "Win32 错误 0x00000005: ".len(),
+            "期望含本地化描述，实际: {s}"
+        );
     }
 
     #[test]

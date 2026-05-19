@@ -7,24 +7,18 @@
 //! - `TargetKind` / `TargetStatus`：可序列化以备未来 Target_List 持久化或快照导出
 //! - `TargetItem`：仅派生 `Clone/Debug`——`Instant` 不实现 `serde::Serialize`，
 //!   且 `last_scanned_at` 是运行期内部状态，不需要序列化（design 决定不持久化 Target_List）
-//!
-//! ## ProcessRecord 占位
-//! 真正的 `ProcessRecord` 在 task 2.2（detector/mod.rs）中实现。
-//! 在 task 2.2 落地之前，这里使用单元类型私有占位，以便本 task 独立通过 `cargo check`。
-//! TODO(task 2.2)：删除下方占位并改用 `use crate::detector::ProcessRecord;`。
 
 use std::path::PathBuf;
 use std::time::Instant;
 
 use serde::{Deserialize, Serialize};
 
-// TODO(task 2.2)：替换为 `use crate::detector::ProcessRecord;`
-type ProcessRecord = ();
+use crate::detector::ProcessRecord;
 
 /// Target_Item 在 `AppState` 中的稳定标识。
 ///
 /// 内部为单调递增 `u64`，由 `AppState::next_id()` 分配（task 2.3）。
-#[derive(Copy, Clone, Eq, PartialEq, Hash, Debug, Serialize, Deserialize)]
+#[derive(Copy, Clone, Eq, PartialEq, Ord, PartialOrd, Hash, Debug, Serialize, Deserialize)]
 pub struct TargetId(pub u64);
 
 /// Target_Item 类型：单文件或文件夹。

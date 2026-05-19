@@ -35,7 +35,9 @@ pub const BLACKLIST: &[&str] = &[
 /// 大小写存在差异，本函数据此对调用方屏蔽该差异。
 #[inline]
 pub fn is_blacklisted(name: &str) -> bool {
-    BLACKLIST.iter().any(|entry| entry.eq_ignore_ascii_case(name))
+    BLACKLIST
+        .iter()
+        .any(|entry| entry.eq_ignore_ascii_case(name))
 }
 
 #[cfg(test)]
