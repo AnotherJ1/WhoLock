@@ -8,19 +8,14 @@
 use std::sync::atomic::{AtomicU8, Ordering};
 
 /// 支持的语言枚举（按 enum discriminant 顺序：0=En, 1=Zh）。
-#[derive(Debug, Clone, Copy, PartialEq, Eq, serde::Serialize, serde::Deserialize)]
+#[derive(Debug, Default, Clone, Copy, PartialEq, Eq, serde::Serialize, serde::Deserialize)]
 #[repr(u8)]
 pub enum Language {
     /// English
     En = 0,
     /// 简体中文（默认）
+    #[default]
     Zh = 1,
-}
-
-impl Default for Language {
-    fn default() -> Self {
-        Language::Zh
-    }
 }
 
 impl Language {

@@ -10,9 +10,7 @@
 //!
 //! Requirements: 2.1, 2.2, 3.1, 3.2, 4.3, 4.4
 
-#![cfg(test)]
-
-use std::path::PathBuf;
+use std::path::Path;
 use std::time::Duration;
 
 use crate::detector::{scan, RestartManagerApi, Win32RestartManager};
@@ -20,7 +18,7 @@ use crate::state::target::{TargetId, TargetItem, TargetKind, TargetStatus};
 
 /// 启动一个 cmd.exe 子进程，让它持有指定文件的写句柄。
 /// 返回 (Child, file_path)，调用方负责后续 .kill() 或等待退出。
-fn spawn_holder(file_path: &PathBuf) -> std::process::Child {
+fn spawn_holder(file_path: &Path) -> std::process::Child {
     // PowerShell 打开文件并 Start-Sleep 60s — 这会持有该文件句柄
     let script = format!(
         "$f = [System.IO.File]::Open('{}', 'OpenOrCreate', 'ReadWrite', 'None'); Start-Sleep -Seconds 60; $f.Close()",
