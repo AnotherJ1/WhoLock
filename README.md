@@ -4,8 +4,6 @@ A modern Windows desktop tool to find out **which processes are holding a lock o
 
 > Tired of `The action can't be completed because the file is open in another program`? This tool tells you exactly which program, and lets you terminate it (when safe to do so).
 
-[简体中文](#中文版本) · English
-
 ---
 
 ## ✨ Features
@@ -239,39 +237,4 @@ This project is built around the spec in `.kiro/specs/file-lock-inspector/` (req
 
 ## 📜 License
 
-Licensed under either of [Apache License 2.0](LICENSE-APACHE) or [MIT License](LICENSE-MIT) at your option.
-
----
-
-## 中文版本
-
-**文件占用查询（File Lock Inspector）** 是一款 Windows 桌面工具，用于排查"文件正在被另一程序使用"问题：
-
-- 列出每个文件/文件夹被哪些进程占用
-- 一键强制结束非系统进程（带二次确认）
-- 三层判定保护系统进程，避免误杀
-- 拖放添加 / 实时刷新（1/2/5/10 秒可选）
-- 标准用户权限不够时一键以管理员身份重启
-- 日志按日轮转，保留 30 天
-- 内置中英文界面切换（默认英文）
-
-### 系统要求
-
-- Windows 10 1809 (build 17763) 及以上，**仅 64 位**
-- 单一 exe 文件（约 5MB），无外部依赖
-
-### 快速开始
-
-下载 `file-lock-inspector.exe` 双击运行 → 拖入文件或文件夹 → 点击 **强制结束** 释放锁 → 完成。
-
-### 切换中文界面
-
-启动后点击工具栏右上角 **中文** 按钮即可切换；选择会持久化到 `%LOCALAPPDATA%\FileLockInspector\config.json`。
-
-### 从源码构建
-
-```powershell
-cargo build --release --target x86_64-pc-windows-msvc
-```
-
-更多详情参见上方英文章节或 `.kiro/specs/file-lock-inspector/` 设计文档。
+Licensed under either of [Apache License 2.0](LICENSE-APACHE) or [MIT License](MIT) at your option.
