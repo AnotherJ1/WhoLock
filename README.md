@@ -4,6 +4,8 @@ A modern Windows desktop tool to find out **which processes are holding a lock o
 
 > Tired of `The action can't be completed because the file is open in another program`? This tool tells you exactly which program, and lets you terminate it (when safe to do so).
 
+[简体中文](README.zh.md)
+
 ---
 
 ## ✨ Features
